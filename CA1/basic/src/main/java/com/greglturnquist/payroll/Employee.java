@@ -24,12 +24,11 @@ import javax.persistence.Id;
 /**
  * @author Greg Turnquist
  */
-// tag::code[]
-@Entity // <1>
+
+@Entity
 public class Employee {
 
-    private @Id
-    @GeneratedValue Long id; // <2>
+    private @Id @GeneratedValue Long id;
     private String firstName;
     private String lastName;
     private String description;
@@ -37,10 +36,12 @@ public class Employee {
     private int jobYears;
     private String email;
 
-    private Employee() {
+    public Employee() {
     }
 
-    public Employee(String firstName, String lastName, String description, String jobTitle, int jobYears, String email) {
+    public Employee(String firstName, String lastName, String description, String jobTitle, int jobYears, String email) throws InstantiationException {
+        if(!validateArguments(firstName, lastName, description, jobTitle, jobYears, email))
+            throw new InstantiationException("Please enter a valid first name, last name, description and job years.");
         this.firstName = firstName;
         this.lastName = lastName;
         this.description = description;
@@ -55,7 +56,7 @@ public class Employee {
         if (description == null || description.trim().isEmpty()) return false;
         if (jobTitle == null || jobTitle.trim().isEmpty()) return false;
         if (jobYears < 0) return false;
-        if (email == null || email.trim().isEmpty()) return false;
+        if (email == null || email.trim().isEmpty() || !email.contains("@")) return false;
         return true;
     }
 
@@ -150,5 +151,5 @@ public class Employee {
 
 }
 
-// end::code[]
+
 

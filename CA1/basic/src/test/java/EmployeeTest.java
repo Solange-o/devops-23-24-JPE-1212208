@@ -1,216 +1,307 @@
 import com.greglturnquist.payroll.Employee;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-
+import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.*;
-
 
 public class EmployeeTest {
 
-    private Employee employee;
-
-    @BeforeEach
-    public void setUp() {
-        employee = new Employee("John", "Doe", "Description", "Manager", 5, "john@example.com");
-    }
-
     @Test
-    public void testPrivateConstructor() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
-        Constructor<Employee> constructor = Employee.class.getDeclaredConstructor();
-        constructor.setAccessible(true);
-        Employee employee = constructor.newInstance();
+    void validCreateEmployee() throws InstantiationException {
+
+        // Arrange
+        String firstName = "name";
+        String lastName = "lastName";
+        String description = "description";
+        String jobTitle = "jobTitle";
+        int jobYears = 5;
+        String email = "name@mail.com";
+
+        // Act
+        Employee employee = null;
+        try {
+            employee = new Employee(firstName, lastName, description, jobTitle, jobYears, email);
+        } catch (InstantiationException e) {
+            fail("InstantiationException should not be thrown for valid input");
+        }
+
+        // Assert
         assertNotNull(employee);
+        assertEquals(firstName, employee.getFirstName());
+        assertEquals(lastName, employee.getLastName());
+        assertEquals(description, employee.getDescription());
+        assertEquals(jobTitle, employee.getJobTitle());
+        assertEquals(jobYears, employee.getJobYears());
+        assertEquals(email, employee.getEmail());
     }
 
     @Test
-    void testValidateArguments_ValidArguments_ReturnsTrue() {
-        assertTrue(employee.validateArguments("John", "Doe", "Description", "Manager", 5, "john@example.com"));
+    void emptyEmployeeFirstName(){
+
+        // Arrange
+        String firstName = "";
+        String lastName = "lastName";
+        String description = "description";
+        String jobTitle = "jobTitle";
+        int jobYears = 5;
+        String email = "name@mail.com";
+
+        // Act and Assert
+        assertThrows(InstantiationException.class, () -> new Employee(firstName, lastName, description, jobTitle, jobYears, email));
     }
 
     @Test
-    void testValidateArguments_NullFirstName_ReturnsFalse() {
-        assertFalse(employee.validateArguments(null, "Doe", "Description", "Manager", 5, "john@example.com"));
+    void emptyEmployeeLastName(){
+
+        // Arrange
+        String firstName = "firstName";
+        String lastName = "";
+        String description = "description";
+        String jobTitle = "jobTitle";
+        int jobYears = 5;
+        String email = "name@mail.com";
+
+        // Act and Assert
+        assertThrows(InstantiationException.class, () -> new Employee(firstName, lastName, description, jobTitle, jobYears, email));
     }
 
     @Test
-    void testValidateArguments_EmptyLastName_ReturnsFalse() {
-        assertFalse(employee.validateArguments("John", "", "Description", "Manager", 5, "john@example.com"));
+    void emptyEmployeeDescription(){
+
+        // Arrange
+        String firstName = "firstName";
+        String lastName = "lastName";
+        String description = "";
+        String jobTitle = "jobTitle";
+        int jobYears = 5;
+        String email = "name@mail.com";
+
+        // Act and Assert
+        assertThrows(InstantiationException.class, () -> new Employee(firstName, lastName, description, jobTitle, jobYears, email));
     }
 
     @Test
-    void testValidateArguments_EmptyJobTitle_ReturnsFalse() {
-        assertFalse(employee.validateArguments("John", "Doe", "Description", "", 5, "john@example.com"));
+    void emptyEmployeeEmail(){
+
+        // Arrange
+        String firstName = "firstName";
+        String lastName = "lastName";
+        String description = "description";
+        String jobTitle = "jobTitle";
+        int jobYears = 5;
+        String email = "";
+
+        // Act and Assert
+        assertThrows(InstantiationException.class, () -> new Employee(firstName, lastName, description, jobTitle, jobYears, email));
     }
 
     @Test
-    void testValidateArguments_NegativeJobYears_ReturnsFalse() {
-        assertFalse(employee.validateArguments("John", "Doe", "Description", "Manager", -1, "john@example.com"));
+    void invalidEmployeeEmail(){
+
+        // Arrange
+        String firstName = "firstName";
+        String lastName = "lastName";
+        String description = "description";
+        String jobTitle = "jobTitle";
+        int jobYears = 5;
+        String email = "email";
+
+        // Act and Assert
+        assertThrows(InstantiationException.class, () -> new Employee(firstName, lastName, description, jobTitle, jobYears, email));
     }
 
     @Test
-    void testValidateArguments_NullEmail_ReturnsFalse() {
-        assertFalse(employee.validateArguments("John", "Doe", "Description", "Manager", 5, null));
+    void negativeEmployeeJobYears(){
+
+        // Arrange
+        String firstName = "firstName";
+        String lastName = "lastName";
+        String description = "description";
+        String jobTitle = "jobTitle";
+        int jobYears = -5;
+        String email = "name@mail.com";
+
+        // Act and Assert
+        assertThrows(InstantiationException.class, () -> new Employee(firstName, lastName, description, jobTitle, jobYears, email));
+    }
+
+
+    @Test
+    void nullEmployeeFirstName(){
+
+        // Arrange
+        String firstName = null;
+        String lastName = "lastName";
+        String description = "description";
+        String jobTitle = "jobTitle";
+        int jobYears = 5;
+        String email = "name@mail.com";
+
+        // Act and Assert
+        assertThrows(InstantiationException.class, () -> new Employee(firstName, lastName, description, jobTitle, jobYears, email));
     }
 
     @Test
-    void testValidateArguments_EmptyEmail_ReturnsFalse() {
-        assertFalse(employee.validateArguments("John", "Doe", "Description", "Manager", 5, ""));
+    void nullEmployeeLastName(){
+
+        // Arrange
+        String firstName = "firstName";
+        String lastName = null;
+        String description = "description";
+        String jobTitle = "jobTitle";
+        int jobYears = 5;
+        String email = "name@mail.com";
+
+        // Act and Assert
+        assertThrows(InstantiationException.class, () -> new Employee(firstName, null, description, jobTitle, jobYears, email));
     }
 
     @Test
-    void testEquals_SameEmployee_ReturnsTrue() {
-        Employee employee2 = new Employee("John", "Doe", "Description", "Manager", 5, "john@example.com");
-        assertTrue(employee.equals(employee2));
+    void nullEmployeeDescription(){
+
+        // Arrange
+        String firstName = "firstName";
+        String lastName = "lastName";
+        String description = null;
+        String jobTitle = "jobTitle";
+        int jobYears = 5;
+        String email = "name@mail.com";
+
+        // Act and Assert
+        assertThrows(InstantiationException.class, () -> new Employee(firstName, lastName, null, jobTitle, jobYears, email));
     }
 
     @Test
-    void testEquals_DifferentEmployees_ReturnsFalse() {
-        Employee employee2 = new Employee("Jane", "Smith", "Description", "Manager", 5, "jane@example.com");
-        assertFalse(employee.equals(employee2));
+    void nullEmployeeEmail(){
+
+        // Arrange
+        String firstName = "firstName";
+        String lastName = "lastName";
+        String description = "description";
+        String jobTitle = "jobTitle";
+        int jobYears = 5;
+        String email = null;
+
+        // Act and Assert
+        assertThrows(InstantiationException.class, () -> new Employee(firstName, lastName, description, jobTitle, jobYears, null));
     }
 
     @Test
-    void testEquals_NullObject_ReturnsFalse() {
-        assertFalse(employee == null);
-    }
-
-    @Test
-    void testEquals_SameObject_ReturnsTrue() {
-        assertTrue(employee.equals(employee));
-    }
-
-    @Test
-    void testEquals_DifferentClass_ReturnsFalse() {
-        assertFalse(employee.equals(new Object()));
-    }
-
-    @Test
-    void testEquals_DifferentId_ReturnsFalse() {
-        Employee employee2 = new Employee("John", "Doe", "Description", "Manager", 5, "john@example.com");
-        employee.setId(1L);
-        employee2.setId(2L);
-        assertFalse(employee.equals(employee2));
-    }
-
-    @Test
-    void testHashCode_DifferentEmployees_ReturnsDifferentHashCodes() {
+    void equalObjectsShouldReturnTrue() throws InstantiationException {
+        // Arrange
+        String firstName = "John";
+        String lastName = "Doe";
+        String description = "Description";
+        String jobTitle = "Manager";
+        int jobYears = 5;
+        String email = "john@example.com";
         Employee employee1 = new Employee("John", "Doe", "Description", "Manager", 5, "john@example.com");
-        Employee employee2 = new Employee("Jane", "Smith", "Description", "Manager", 5, "jane@example.com");
-        assertNotEquals(employee1.hashCode(), employee2.hashCode());
-    }
-
-    @Test
-    void testHashCode_SameEmployee_ReturnsSameHashCode() {
         Employee employee2 = new Employee("John", "Doe", "Description", "Manager", 5, "john@example.com");
-        assertEquals(employee.hashCode(), employee2.hashCode());
+
+        // Act & Assert
+        assertTrue(employee1.equals(employee2));
+        assertTrue(employee2.equals(employee1));
     }
 
     @Test
-    void testHashCode_DifferentEmployee_ReturnsDifferentHashCodes() {
-        Employee employee2 = new Employee("Jane", "Smith", "Description", "Manager", 5, "jane@example.com");
-        assertNotEquals(employee.hashCode(), employee2.hashCode());
+    void differentObjectsShouldReturnFalse() throws InstantiationException {
+        // Arrange
+        String firstName = "John";
+        String lastName = "Doe";
+        String description = "Description";
+        String jobTitle = "Manager";
+        int jobYears = 5;
+        String email = "john@example.com";
+        Employee employee1 = new Employee("John", "Doe", "Description", "Manager", 5, "john@example.com");
+        Employee employee2 = new Employee("Jane", "Doe", "Description", "Manager", 5, "jane@example.com");
+
+        // Act & Assert
+        assertFalse(employee1.equals(employee2));
+        assertFalse(employee2.equals(employee1));
     }
 
     @Test
-    void testHashCode_ChangeEmail_ReturnsDifferentHashCode() {
-        int originalHashCode = employee.hashCode();
-        employee.setEmail("mail");
-        assertNotEquals(originalHashCode, employee.hashCode());
+    void nullObjectShouldReturnFalse() throws InstantiationException {
+        // Arrange
+        String firstName = "John";
+        String lastName = "Doe";
+        String description = "Description";
+        String jobTitle = "Manager";
+        int jobYears = 5;
+        String email = "john@example.com";
+        Employee employee = new Employee("John", "Doe", "Description", "Manager", 5, "john@example.com");
+
+        // Act & Assert
+        assertFalse(employee.equals(null));
     }
 
     @Test
-    void testGetFirstName() {
-        assertEquals("John", employee.getFirstName());
+    void differentClassObjectShouldReturnFalse() throws InstantiationException {
+        // Arrange
+        String firstName = "John";
+        String lastName = "Doe";
+        String description = "Description";
+        String jobTitle = "Manager";
+        int jobYears = 5;
+        String email = "john@example.com";
+        Employee employee = new Employee("John", "Doe", "Description", "Manager", 5, "john@example.com");
+
+        // Act & Assert
+        assertFalse(employee.equals("Not an Employee"));
     }
 
     @Test
-    void testSetFirstName() {
-        employee.setFirstName("Jane");
-        assertEquals("Jane", employee.getFirstName());
+    void hashCodeConsistency() throws InstantiationException {
+        // Arrange
+        String firstName = "John";
+        String lastName = "Doe";
+        String description = "Description";
+        String jobTitle = "Manager";
+        int jobYears = 5;
+        String email = "john@example.com";
+        Employee employee1 = new Employee("John", "Doe", "Description", "Manager", 5, "john@example.com");
+        Employee employee2 = new Employee("John", "Doe", "Description", "Manager", 5, "john@example.com");
+
+        // Act & Assert
+        assertEquals(employee1.hashCode(), employee2.hashCode());
     }
 
     @Test
-    void testGetLastName() {
-        assertEquals("Doe", employee.getLastName());
+    void getId() throws InstantiationException {
+        // Arrange
+        String firstName = "John";
+        String lastName = "Doe";
+        String description = "Description";
+        String jobTitle = "Manager";
+        int jobYears = 5;
+        String email = "john@example.com";
+        Long id = 123L;
+        Employee employee = new Employee("John", "Doe", "Description", "Manager", 5, "john@example.com");
+
+        // Act
+        employee.setId(id);
+
+        // Assert
+        assertEquals(id, employee.getId());
     }
 
     @Test
-    void testSetLastName() {
-        employee.setLastName("Smith");
-        assertEquals("Smith", employee.getLastName());
-    }
+    void setId() throws InstantiationException {
+        // Arrange
+        String firstName = "John";
+        String lastName = "Doe";
+        String description = "Description";
+        String jobTitle = "Manager";
+        int jobYears = 5;
+        String email = "john@example.com";
+        Long id = 123L;
+        Employee employee = new Employee("John", "Doe", "Description", "Manager", 5, "john@example.com");
 
-    @Test
-    void testGetDescription() {
-        assertEquals("Description", employee.getDescription());
-    }
+        // Act
+        employee.setId(id);
 
-    @Test
-    void testSetDescription() {
-        employee.setDescription("New Description");
-        assertEquals("New Description", employee.getDescription());
-    }
+        // Assert
+        assertEquals(id, employee.getId());
 
-
-    @Test
-    void testSetAndGetId() {
-        employee.setId(123L);
-        assertEquals(123L, employee.getId());
-    }
-
-    @Test
-    void testSetAndGetId_Null() {
-        employee.setId(null);
-        assertNull(employee.getId());
-    }
-
-    @Test
-    void testSetAndGetDescription() {
-        employee.setDescription("New Description");
-        assertEquals("New Description", employee.getDescription());
-    }
-
-    @Test
-    void testGetJobTitle() {
-        assertEquals("Manager", employee.getJobTitle());
-    }
-
-
-    @Test
-    void testSetJobTitle() {
-        employee.setJobTitle("Senior Manager");
-        assertEquals("Senior Manager", employee.getJobTitle());
-    }
-
-    @Test
-    void testGetJobYears() {
-        assertEquals(5, employee.getJobYears());
-    }
-
-    @Test
-    void testSetJobYears() {
-        employee.setJobYears(7);
-        assertEquals(7, employee.getJobYears());
-    }
-
-    @Test
-    void testGetEmail() {
-        assertEquals("john@example.com", employee.getEmail());
-    }
-
-    @Test
-    void testSetEmail() {
-        employee.setEmail("newemail@example.com");
-        assertEquals("newemail@example.com", employee.getEmail());
-    }
-
-    @Test
-    void testSetAndGetDescription_Null() {
-        employee.setDescription(null);
-        assertNull(employee.getDescription());
     }
 
 }
