@@ -234,7 +234,7 @@ Commands:
 ./mvnw spring-boot:run
 ```
 
-12. Open a browser and navigate to [http://localhost:8080/employees](http://localhost:8080/employees) to see the changes.
+12. Open a browser and navigate to [http://localhost:8080](http://localhost:8080) to see the changes.
 
 13. Commit the changes to the master branch:
 
