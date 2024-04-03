@@ -137,8 +137,8 @@ The main class of the server is defined as "basic_demo.ChatServerApp", and the p
 
 
 2. Send the changes from the local repository to the remote repository:
-**git add . **
-**git commit -m "[FEAT] Add new task runServer. closes #10"
+**git add .**
+**git commit -m "[FEAT] Add new task runServer. closes #10"**
 **git push**
 
 
@@ -192,8 +192,8 @@ dependencies {
 **./gradlew runServer**
 
 5. Send the changes from the local repository to the remote repository:
-**git add . **
-**git commit -m "[FIX] Add a simple unit test and update the gradle script so that it is able to execute the test. closes #11"
+**git add .**
+**git commit -m "[FIX] Add a simple unit test and update the gradle script so that it is able to execute the test. closes #11"**
 **git push**
 
 
@@ -219,8 +219,8 @@ task copySources (type: Copy){
 
 
 3. Send the changes from the local repository to the remote repository:
-**git add . **
-**git commit -m "[FIX] Add a new task of type Copy to be used to make a backup of the sources of the application. closes #12"
+**git add .**
+**git commit -m "[FIX] Add a new task of type Copy to be used to make a backup of the sources of the application. closes #12"**
 **git push**
 
 
@@ -248,8 +248,8 @@ task zipSources (type: Zip){
 
 
 3. Send the changes from the local repository to the remote repository:
-**git add . **
-**git commit -m "[FIX] Add a new task of type Zip to be used to make an archive of the sources of the application. closes #13"
+**git add .**
+**git commit -m "[FIX] Add a new task of type Zip to be used to make an archive of the sources of the application. closes #13"**
 **git push**
 
 
