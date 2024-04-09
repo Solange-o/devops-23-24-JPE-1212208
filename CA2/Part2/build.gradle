@@ -43,3 +43,9 @@ task copyJar(type: Copy) {
 
 	include "*.jar"
 }
+
+task deleteWebpackFiles(type: Delete) {
+	delete fileTree("src/main/resources/static/built")
+}
+
+clean.dependsOn (deleteWebpackFiles)
