@@ -1,9 +1,9 @@
-import com.greglturnquist.payroll.Employee;
+package com.greglturnquist.payroll;
+
 import org.junit.jupiter.api.Test;
-import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class EmployeeTest {
+class EmployeeTest {
 
     @Test
     void validCreateEmployee() throws InstantiationException {
