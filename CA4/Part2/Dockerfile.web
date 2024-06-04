@@ -1,0 +1,24 @@
+# It uses a base image of OpenJDK version 17 with a minimalist (slim) configuration.
+FROM openjdk:17-jdk-slim
+
+# Install additional utilities
+RUN apt-get update -y && apt-get install -y git unzip
+
+# Create a directory called /app. This directory will be used as the entry point point for the application in the container.
+RUN mkdir /app
+
+# Set /app as the current working directory. All subsequent commands will be executed from this directory.
+WORKDIR /app/
+
+# Clone your Spring Boot application repository
+ RUN git clone https://github.com/Solange-o/devops-23-24-JPE-1212208.git
+
+# Set the working directory
+WORKDIR /app/devops-23-24-JPE-1212208/CA2/Part2
+
+# Ensure the gradlew script is executable and build the application
+ RUN chmod +x ./gradlew && ./gradlew clean build
+
+# Configure the container to run as an executable
+ ENTRYPOINT ["./gradlew"]
+ CMD ["bootRun"]
