@@ -4,13 +4,19 @@ pipeline {
 		stage('Checkout') {
 			steps {
 				echo 'Checking out...'
-				git 'https://bitbucket.org/pssmatos/gradle_basic_demo'
+				git 'https://github.com/Solange-o/devops-23-24-JPE-1212208/CA2/Part2'
+				}
+			}
+		stage('Assemble') {
+			steps {
+				echo 'Building...'
+				sh './gradlew build'
 				}
 			}
 		stage('Build') {
 			steps {
 				echo 'Building...'
-				sh './gradlew clean build'
+				sh './gradlew bootrun'
 				}
 			}
 		stage('Archiving') {
