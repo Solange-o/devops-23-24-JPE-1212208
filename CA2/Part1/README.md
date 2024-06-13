@@ -189,7 +189,7 @@ dependencies {
 
 
 4. Open a terminal and run the task independently:
-**./gradlew runServer**
+**./gradlew clean test --info**
 
 5. Send the changes from the local repository to the remote repository:
 **git add .**
@@ -215,7 +215,7 @@ task copySources (type: Copy){
 
 
 2. Navigate to the project folder and run the task independently:
-**./gradlew copySources**
+**./gradlew copySource**
 
 
 3. Send the changes from the local repository to the remote repository:
@@ -244,7 +244,7 @@ task zipSources (type: Zip){
 
 
 2. Navigate to the project folder and run the task independently in a terminal:
-**./gradlew zipSources**
+**./gradlew zip**
 
 
 3. Send the changes from the local repository to the remote repository:
