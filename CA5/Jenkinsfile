@@ -4,7 +4,7 @@ pipeline {
 		stage('Checkout') {
 			steps {
 				echo 'Checking out...'
-				git branch: 'main', url: 'https://github.com/Solange-o/devops-23-24-JPE-1212208.git'
+				git branch: 'master', url: 'https://github.com/Solange-o/devops-23-24-JPE-1212208.git'
 				}
 			}
 		stage('Assemble') {
