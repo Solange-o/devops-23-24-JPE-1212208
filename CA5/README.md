@@ -132,6 +132,7 @@ You should now see the configuration page of the Job.
 
 **8.** We can see the pipeline on the Jenkins dashboard:
 
+
     ![CA5_Part1_8080_Jenkins](Images/CA5_Part1_8080_Jenkins.png)
 
 
@@ -312,11 +313,15 @@ Builds the Docker image from the Dockerfile and publishes the image with two tag
 
 **9.** We can see the pipeline on the Jenkins dashboard:
 
+
     ![CA5_Part2_9191_Jenkins](Images/CA5_Part2_9191_Jenkins.png)
 
+
 **10.** After Building and publishing Docker image it  can be seen in the Docker Hub.
+
     
     ![dockerHub](Images/dockerHub.png)
+    
 
 **11.** Check the docker desktop for the container running.
 
